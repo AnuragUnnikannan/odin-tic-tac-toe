@@ -1,8 +1,25 @@
 // Player factory function
-const Player = (name, sign) => {
-    const getName = () => name;
-    const getSign = () => sign;
-    return {getName, getSign};
+class Player {
+	constructor(name, sign) {
+		this.name = name;
+		this.sign = sign;
+	}
+	
+	get getName() {
+		return this.name;
+	}
+	
+	set setName(name) {
+		this.name = name;
+	}
+	
+	get getSign() {
+		return this.sign;
+	}
+	
+	set setSign(sign) {
+		this.sign = sign;
+	}
 }
 
 // Gameboard module for rendering the board
@@ -39,7 +56,6 @@ const GameBoard = (() => {
                     e.target.innerText = "X";
                     turn = "X";
                 }
-                console.log(board);
                 GameController.check();
             }
         }
@@ -50,7 +66,6 @@ const GameBoard = (() => {
                 let result = GameController.check();
                 if(!result) {
                     putSignAuto();
-                    console.log(board);
                 }
             }
         }
@@ -112,8 +127,8 @@ const GameController = (() => {
         <div class="gameboard"></div>
         `;
         GameBoard.render("computer");
-        playerX = Player("Player", "X");
-        playerO = Player("Computer", "O");
+        playerX = new Player("Player", "X");
+        playerO = new Player("Computer", "O");
     }
     document.querySelector(".computer").addEventListener("click", () => {
         mainContainer.removeChild(document.querySelector(".type"));
@@ -142,8 +157,8 @@ const GameController = (() => {
             if(xName && oName) {
                 mainContainer.removeChild(document.querySelector("form"));
                 GameBoard.render("human");
-                playerX = Player(xName, "X");
-                playerO = Player(oName, "O");
+                playerX = new Player(xName, "X");
+                playerO = new Player(oName, "O");
             }
         });
     }
@@ -158,9 +173,9 @@ const GameController = (() => {
             if(GameBoard.getSign(combination[0]) === GameBoard.getSign(combination[1]) && GameBoard.getSign(combination[1]) === GameBoard.getSign(combination[2]) && GameBoard.getSign(combination[2]) !== "") {
                 let sign = GameBoard.getSign(combination[0]);
                 if(sign === "X")
-                    info.textContent = `${playerX.getName()} wins!`;
+                    info.textContent = `${playerX.getName} wins!`;
                 else
-                    info.textContent = `${playerO.getName()} wins!`;
+                    info.textContent = `${playerO.getName} wins!`;
 
                 wrapper.style.display = "flex";
                 return true;
